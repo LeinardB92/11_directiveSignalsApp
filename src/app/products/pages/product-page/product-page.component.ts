@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-product-page',
@@ -6,5 +7,21 @@ import { Component } from '@angular/core';
   styleUrls: ['./product-page.component.css']
 })
 export class ProductPageComponent {
+
+  // Ambas línes son lo mismo, la primerña línea es una nueva manera de hacerlo que busca que la inyección de dependendias sea visualmente más entendible.
+  private fb = inject( FormBuilder);
+  // constructor(private fb : FormBuilder){}
+
+  public color: string = 'green';
+
+
+  public myForm: FormGroup = this.fb.group({
+    name: ['', [ Validators.required, Validators.minLength(6), Validators.email ] ]
+  });
+
+
+  changeColor() {
+    this.color = '#xxxxxx'.replace(/x/g, y=>(Math.random()*16|0).toString(16));
+  }
 
 }
